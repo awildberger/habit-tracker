@@ -359,7 +359,7 @@ function calcStreak(){
 }
 
 function manageSheetHTML(){
-  const types={binary:'Yes/No',scale5:'Scale 1–5',custom:'Number'};
+  const types={binary:'Yes/No',scale5:null,custom:'Number'};
   const manageTab=settings.manageTab||'active';
   const activeHabits=habits.filter(h=>!h.archived);
   const archivedHabits=habits.filter(h=>h.archived);
@@ -370,7 +370,7 @@ function manageSheetHTML(){
       <div class="manage-item${h.id===dragId?' dragging':''}" data-id="${h.id}">
         <div class="drag-handle" ontouchstart="dragStart(event,${h.id})" ontouchmove="dragMove(event)" ontouchend="dragEnd(event)">⠿</div>
         <div class="manage-item-dot" style="background:${h.color||'#8B8FA8'}"></div>
-        <div style="flex:1"><div class="manage-item-name">${escH(h.name)}</div><div class="manage-item-type">${types[h.type]||h.type}${h.unit?' · '+escH(h.unit):''}</div></div>
+        <div style="flex:1"><div class="manage-item-name">${escH(h.name)}</div><div class="manage-item-type">${h.type==='scale5'?`Scale ${h.scaleMin??0}–${h.scaleMax||5}`:types[h.type]||h.type}${h.unit?' · '+escH(h.unit):''}</div></div>
         <button class="icon-btn" style="margin-right:4px" onclick="toggleArchive(${h.id})">${IC.archive('#9898B5')}</button>
         <button class="icon-btn" style="margin-right:4px" onclick="openEdit(${h.id})">${IC.edit()}</button>
         <button class="icon-btn" onclick="deleteHabit(${h.id})">${IC.trash()}</button>
