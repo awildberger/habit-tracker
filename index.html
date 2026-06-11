@@ -141,7 +141,6 @@ input[type=color].native-picker { position: absolute; opacity: 0; width: 0; heig
 </head>
 <body>
 <div id="root"></div>
-<input type="color" class="native-picker" id="native-color-picker" oninput="onNativeColor(this.value)" onchange="onNativeColor(this.value)">
 <script>
 if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 
@@ -429,7 +428,6 @@ function habitFormHTML(initial){
         <div class="color-custom-row">
           <div class="color-preview" id="f-color-preview" style="background:${color}"></div>
           <input class="hex-input" id="f-hex" value="${color}" maxlength="7" placeholder="#A78BCA" oninput="onHexInput(this.value)" />
-          <button class="color-wheel-btn" onclick="openNativePicker()">🎨 Pick</button>
         </div>
       </div>
       <div class="btn-row">
@@ -613,8 +611,6 @@ function selectType(type){document.querySelectorAll('.type-btn').forEach(b=>b.cl
 function applyColor(c){document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('selected'));document.getElementById('f-color').value=c;document.getElementById('f-color-preview').style.background=c;document.getElementById('f-hex').value=c;document.getElementById('f-save').style.background=c;document.getElementById('f-type-row').style.setProperty('--sel-color',c);}
 function selectSwatch(c){applyColor(c);event.currentTarget.classList.add('selected');}
 function onHexInput(val){const v=val.startsWith('#')?val:'#'+val;if(isValidHex(v)){applyColor(v);document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('selected'));}}
-function openNativePicker(){const p=document.getElementById('native-color-picker');p.value=document.getElementById('f-color').value||'#B39DCA';p.click();}
-function onNativeColor(c){if(!document.getElementById('f-color'))return;applyColor(c);}
 function saveHabit(editId){
   const name=document.getElementById('f-name').value.trim();if(!name)return;
   const type=document.getElementById('f-type').value,unit=document.getElementById('f-unit')?.value.trim()||'',color=document.getElementById('f-color').value||PASTEL_COLORS[0];
