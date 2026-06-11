@@ -162,7 +162,7 @@ const MONTHS_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct',
 const MONTHS_LONG=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const DOW=['S','M','T','W','T','F','S'];
 
-function todayStr(){return new Date().toISOString().slice(0,10);}
+function todayStr(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function shiftDate(d,n){const dt=new Date(d+'T12:00:00');dt.setDate(dt.getDate()+n);return dt.toISOString().slice(0,10);}
 function dateLabel(d){const t=todayStr(),y=shiftDate(t,-1);if(d===t)return'Today';if(d===y)return'Yesterday';return new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
 function getEntry(habit,date){const e=(habit.entries||[]).find(e=>e.date===date);return e!==undefined?e.value:null;}
