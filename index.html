@@ -400,7 +400,7 @@ function manageSheetHTML(){
 
 function habitFormHTML(initial){
   const name=initial?.name||'',type=initial?.type||'binary',unit=initial?.unit||'',color=initial?.color||PASTEL_COLORS[0];
-  const types=[{v:'binary',l:'Yes/No',d:'Checkbox'},{v:'scale5',l:'Scale',d:'1–N'},{v:'custom',l:'Number',d:'Custom'}];
+  const types=[{v:'binary',l:'Yes/No',d:'Checkbox'},{v:'scale5',l:'Scale',d:'e.g. 0–10'},{v:'custom',l:'Number',d:'Custom'}];
   const swatches=PASTEL_COLORS.map(c=>`<div class="color-swatch ${c===color?'selected':''}" style="background:${c}" onclick="selectSwatch('${c}')"></div>`).join('');
   return`<div class="overlay" id="form-overlay" onclick="closeOverlay(event,'form-overlay')">
     <div class="sheet"><div class="sheet-handle"></div>
