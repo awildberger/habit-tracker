@@ -1,4 +1,4 @@
-const CACHE = 'habits-v7';
+const CACHE = 'habits-v8';
 const BASE = self.registration.scope;
 const FILES = [
   BASE,
