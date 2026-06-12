@@ -541,12 +541,15 @@ function dragStart(e,id){dragId=id;e.currentTarget.style.opacity='0.5';if(naviga
 function dragMove(e){
   if(!dragId)return;e.preventDefault();
   const el=document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY)?.closest('[data-id]');
-  if(el){const overId=parseInt(el.dataset.id);if(overId!==dragId){dragOverId=overId;document.querySelectorAll('.manage-item').forEach(i=>i.classList.toggle('drag-over',parseInt(i.dataset.id)===overId));}}
+  if(el){const overId=parseInt(el.dataset.id);if(overId&&overId!==dragId){dragOverId=overId;document.querySelectorAll('.manage-item').forEach(i=>i.classList.toggle('drag-over',parseInt(i.dataset.id)===overId));}}
 }
 function dragEnd(){
   if(!dragId)return;
   if(dragOverId&&dragOverId!==dragId){const from=habits.findIndex(h=>h.id===dragId),to=habits.findIndex(h=>h.id===dragOverId);if(from!==-1&&to!==-1){const a=[...habits];const[it]=a.splice(from,1);a.splice(to,0,it);habits=a;saveHabits(habits);}}
-  dragId=null;dragOverId=null;render();
+  dragId=null;dragOverId=null;
+  const scrollPos=document.querySelector('.sheet')?.scrollTop||0;
+  render();
+  requestAnimationFrame(()=>{const s=document.querySelector('.sheet');if(s)s.scrollTop=scrollPos;});
 }
 
 function toggleReminder(on){
