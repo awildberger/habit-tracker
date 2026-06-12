@@ -146,7 +146,20 @@ if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.se
 
 const PASTEL_COLORS=['#B39DCA','#85BBC9','#85C4A0','#C4A885','#C485A0','#859EC4','#AFC485','#C48585','#85C4BC','#C4BC85','#A3B6C8','#B3A3C8','#A3C8AB','#C8B8A3','#C8A3B6'];
 const STORE='habits_v3', SETTINGS_STORE='habit_settings';
-function loadHabits(){try{return JSON.parse(localStorage.getItem(STORE))||[];}catch{return[];}}
+function loadHabits(){
+  try{
+    const h=JSON.parse(localStorage.getItem(STORE))||[];
+    return h.map(habit=>({
+      scaleMin:0,
+      scaleMax:5,
+      color:'#B39DCA',
+      unit:'',
+      archived:false,
+      entries:[],
+      ...habit,
+    }));
+  }catch{return[];}
+}
 function saveHabits(h){try{localStorage.setItem(STORE,JSON.stringify(h));}catch{}}
 function loadSettings(){try{return JSON.parse(localStorage.getItem(SETTINGS_STORE))||{};}catch{return{};}}
 function saveSettings(s){try{localStorage.setItem(SETTINGS_STORE,JSON.stringify(s));}catch{}}
