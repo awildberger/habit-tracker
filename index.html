@@ -388,7 +388,10 @@ function manageSheetHTML(){
 
   return`<div class="overlay" id="manage-overlay" onclick="closeOverlay(event,'manage-overlay')">
     <div class="sheet"><div class="sheet-handle"></div>
-      <div class="sheet-title">Manage Habits</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div class="sheet-title" style="margin:0">Manage Habits</div>
+        <button onclick="modal=null;render()" style="background:var(--surface2);border:1px solid var(--border2);border-radius:50%;width:30px;height:30px;color:var(--text2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">×</button>
+      </div>
       <div style="display:flex;gap:6px;margin-bottom:20px">
         <button class="tab ${manageTab==='active'?'active':''}" onclick="settings.manageTab='active';saveSettings(settings);render()">Active</button>
         <button class="tab ${manageTab==='archived'?'active':''}" onclick="settings.manageTab='archived';saveSettings(settings);render()">Archived ${archivedHabits.length>0?'('+archivedHabits.length+')':''}</button>
@@ -486,6 +489,8 @@ function datePickerHTML(){
 }
 
 function render(){
+  const scrollEl=document.getElementById('scroll-area');
+  const scrollTop=scrollEl?scrollEl.scrollTop:0;
   document.documentElement.style.setProperty('--accent',habits.find(h=>!h.archived)?.color||'#B39DCA');
   const topbarHTML=`<div class="topbar">
     <div class="topbar-inner">
@@ -506,7 +511,9 @@ function render(){
   else if(modal?.type==='edit'){const h=habits.find(h=>h.id===modal.id);if(h)modalHTML=habitFormHTML(h);}
   else if(modal==='datepicker')modalHTML=datePickerHTML();
   else if(modal==='settings')modalHTML=settingsSheetHTML();
-  document.getElementById('root').innerHTML=`${topbarHTML}<div class="scroll">${tab==='log'?logTabHTML():overviewTabHTML()}</div><button class="fab" onclick="openAdd()">${IC.plus()}</button>${modalHTML}`;
+  document.getElementById('root').innerHTML=`${topbarHTML}<div class="scroll" id="scroll-area">${tab==='log'?logTabHTML():overviewTabHTML()}</div><button class="fab" onclick="openAdd()">${IC.plus()}</button>${modalHTML}`;
+  const newScrollEl=document.getElementById('scroll-area');
+  if(newScrollEl&&!modal) newScrollEl.scrollTop=scrollTop;
 }
 
 function setTab(t){tab=t;render();}
